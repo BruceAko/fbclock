@@ -1,6 +1,6 @@
 NAME    := fbclock
 VERSION := 1.0b
-CC      :=  gcc 
+CC      := arm-linux-gcc 
 LIBS    := -lm ${EXTRA_LIBS} 
 TARGET	:= $(NAME)
 SOURCES := $(shell find src/ -type f -name *.c)
@@ -11,7 +11,7 @@ PREFIX  := /usr
 MANDIR  := $(DESTDIR)/$(PREFIX)/share/man
 BINDIR  := $(DESTDIR)/$(PREFIX)/bin
 SHARE   := $(DESTDIR)/$(PREFIX)/share/$(TARGET)
-CFLAGS  := -g -fpie -fpic -Wall -DNAME=\"$(NAME)\" -DVERSION=\"$(VERSION)\" -DSHARE=\"$(SHARE)\" -DPREFIX=\"$(PREFIX)\" -I include ${EXTRA_CFLAGS}
+CFLAGS  := -g -fpie -fpic -Wall -DNAME=\"$(NAME)\" -DVERSION=\"$(VERSION)\" -DSHARE=\"$(SHARE)\" -DPREFIX=\"$(PREFIX)\" -I include ${EXTRA_CFLAGS} -std=c99
 LDFLAGS := -pie ${EXTRA_LDFLAGS}
 
 all: $(TARGET)
