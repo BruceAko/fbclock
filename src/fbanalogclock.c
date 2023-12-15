@@ -27,6 +27,7 @@
 #include "region.h"
 #include "string.h"
 
+#define M_PI 3.14159265358979323846
 static const double TWOPI = 2.0 * M_PI;
 
 /*==========================================================================
