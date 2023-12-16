@@ -88,6 +88,14 @@ BOOL framebuffer_init(FrameBuffer* self, char** error) {
 
     self->fb_data = mmap(0, self->fb_data_size, PROT_READ | PROT_WRITE, MAP_SHARED, self->fd, (off_t)0);
 
+    // Black Screen
+    for (int y = 0; y < 768; y++) {
+      for (int x = 0; x < 1024; x++) {
+        *(self->fb_data + y * 1024 * 2 + x * 2) = 0x00;
+        *(self->fb_data + y * 1024 * 2 + x * 2 + 1) = 0x00;
+      }
+    }
+
     ret = TRUE;
   } else {
     if (error) asprintf(error, "Can't open framebuffer: %s", strerror(errno));
