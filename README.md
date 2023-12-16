@@ -65,11 +65,7 @@ Even if the simple refresh procedure is used, it could theoretically still fail,
 
 I've taken some trouble to minimize the amount of work done when the display refreshes, but there's still a fair amount of math and data-pushing. With the second-hand drawn, and a 300x300 display size, `fbclock` uses 0.5%-1.5% CPU on a Raspberry Pi 3. 
 
-It should go without saying that, to use this utility, the user must have read/write access to the framebuffer. It's designed to run  in an environment without X or any graphical desktop -- if you have X running, then you have far better options than this.
-
-## Legal, etc
-
-`fbclock` is copyright (c)2020 Kevin Boone, and distributed under the terms of the GNU Public Licence, version 3.0. Essentially that means you may use the software however you wish, so long as the source code continues to be made available, and the original author is acknowledged. There is no warranty of any kind.
+It should go without saying that, to use this utility, the user must have read/write access to the framebuffer. It's designed to run in an environment without X or any graphical desktop -- if you have X running, then you have far better options than this.
 
 ## Revision history
 
