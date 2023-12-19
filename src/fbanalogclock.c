@@ -101,6 +101,7 @@ void program_draw_clock_in_region(Region* r, BOOL seconds, BOOL date) {
   int height = region_get_height(r);
 
   time_t t = time(NULL);
+  t += 8*3600; // GMT+8
   const struct tm* tm = localtime(&t);
   int hr = tm->tm_hour;
   int min = tm->tm_min;
