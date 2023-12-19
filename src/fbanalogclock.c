@@ -96,16 +96,24 @@ const BitmapFont* select_analog_font(int radius) {
   draw_clock_in_region
 
 ==========================================================================*/
-void program_draw_clock_in_region(Region* r, BOOL seconds, BOOL date) {
+void program_draw_clock_in_region(Region* r, BOOL seconds, BOOL date, CustomTime* customTime) {
   int width = region_get_width(r);
   int height = region_get_height(r);
 
   time_t t = time(NULL);
-  t += 8*3600; // GMT+8
+  t += 8 * 3600;  // GMT+8
   const struct tm* tm = localtime(&t);
-  int hr = tm->tm_hour;
-  int min = tm->tm_min;
-  int sec = tm->tm_sec;
+
+  int hr, min, sec;
+  if (customTime == NULL) {
+    hr = tm->tm_hour;
+    min = tm->tm_min;
+    sec = tm->tm_sec;
+  } else {
+    hr = customTime->hr;
+    min = customTime->min;
+    sec = customTime->sec;
+  }
 
   BYTE cr = 255, cg = 255, cb = 255;
 

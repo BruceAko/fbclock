@@ -29,8 +29,8 @@
 
 #define DEF_WIDTH 300
 #define DEF_HEIGHT 300
-#define DEF_POSITION_X 20 
-#define DEF_POSITION_Y 20 
+#define DEF_POSITION_X 100 
+#define DEF_POSITION_Y 30 
 #define DEF_TRANSPARENCY 50
 
 // All these variables have to be global, because they are
@@ -130,10 +130,20 @@ int program_run (ProgramContext *context)
       int transparency = program_context_get_integer 
         (context, "transparency", DEF_TRANSPARENCY);
       BOOL seconds = program_context_get_boolean 
-         (context, "seconds", FALSE); 
+         (context, "seconds", TRUE); 
       BOOL date = program_context_get_boolean 
-         (context, "date", FALSE); 
+         (context, "date", TRUE);
 
+      CustomTime* customTime = NULL;
+      if(program_context_get_boolean(context, "customTimeEnabled", FALSE)){
+        CustomTime customTimeStruct = {
+          .hr = program_context_get_integer(context, "customTimeHr", DEF_TRANSPARENCY),
+          .min = program_context_get_integer(context, "customTimeMin", DEF_TRANSPARENCY),
+          .sec = program_context_get_integer(context, "customTimeSec", DEF_TRANSPARENCY),
+        };
+        customTime = &customTimeStruct;
+      }
+     
       log_debug ("Clock area width is %d", width); 
       log_debug ("Clock TL corner is (%d, %d)", position_x, position_y);
       log_debug ("Clock background transparency is %d%%", transparency); 
@@ -144,19 +154,35 @@ int program_run (ProgramContext *context)
       signal (SIGUSR2, program_signal_usr2); 
       BOOL stop = FALSE;
       while (!stop)
-        {
+      {
         Region *r = region_clone (wallpaper_region);
 
-        program_draw_clock_in_region (r, seconds, date);
+        program_draw_clock_in_region (r, seconds, date, customTime);
 
         region_to_fb (r, fb, position_x, position_y);
         region_destroy (r);
       
-        if (seconds)
+        if (seconds){
+          if(customTime!=NULL){
+              customTime->sec++;
+              if(customTime->sec==60){
+                  customTime->sec=0;
+                  customTime->min++;
+              }
+          }
           sleep (1);
-        else
+        }
+        else{
+          if(customTime!=NULL){
+              customTime->min++;
+              if(customTime->min==60){
+                  customTime->min=0;
+                  customTime->hr++;
+              }
+          }
           sleep (60);
         }
+      }
 
       region_destroy (wallpaper_region);
       framebuffer_deinit (fb);

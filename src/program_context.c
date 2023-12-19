@@ -60,6 +60,13 @@ ProgramContext* program_context_create(void) {
   return self;
 }
 
+static void add_custom_time(ProgramContext* self, BOOL* ret) {
+  program_context_put_boolean(self, "customTimeEnabled", TRUE);
+  program_context_put_integer(self, "customTimeHr" , (optarg[0] - '0') * 10 + (optarg[1] - '0'));
+  program_context_put_integer(self, "customTimeMin", (optarg[2] - '0') * 10 + (optarg[3] - '0'));
+  program_context_put_integer(self, "customTimeSec", (optarg[4] - '0') * 10 + (optarg[5] - '0'));
+}
+
 /*==========================================================================
   program_context_parse_command_line
   This needs to be called after program_context_read_rc_files, in order
@@ -95,12 +102,13 @@ BOOL program_context_parse_command_line(ProgramContext* self, int argc, char** a
                                          {"transparency", required_argument, NULL, 't'},
                                          {"width", required_argument, NULL, 'w'},
                                          {"height", required_argument, NULL, 'h'},
+                                         {"time", required_argument, NULL, 'T'},
                                          {0, 0, 0, 0}};
 
   int opt;
   while (ret) {
     int option_index = 0;
-    opt = getopt_long(argc, argv, "vl:w:h:x:y:sf:t:d", long_options, &option_index);
+    opt = getopt_long(argc, argv, "vl:w:h:x:y:sf:t:dT:", long_options, &option_index);
 
     if (opt == -1) break;
 
@@ -128,6 +136,8 @@ BOOL program_context_parse_command_line(ProgramContext* self, int argc, char** a
           program_context_put_integer(self, "transparency", atoi(optarg));
         else if (strcmp(long_options[option_index].name, "fbdev") == 0)
           program_context_put(self, "fbdev", optarg);
+        else if(strcmp(long_options[option_index].name, "time") == 0)
+          add_custom_time(self, &ret);
         else
           exit(-1);
         break;
@@ -163,6 +173,9 @@ BOOL program_context_parse_command_line(ProgramContext* self, int argc, char** a
         break;
       case 'f':
         program_context_put(self, "fbdev", optarg);
+        break;
+      case 'T':
+        add_custom_time(self, &ret);
         break;
       default:
         ret = FALSE;
