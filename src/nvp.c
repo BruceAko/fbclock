@@ -2,7 +2,6 @@
  
   fbclock 
   nvp.c
-  Copyright (c)2020 Kevin Boone, GPL v3.0
 
   Methds for handling name-value pairs. A Props object is essentially a 
   list of NVPs. Each NVP has a key, which is an ordinary C string, and
@@ -17,80 +16,62 @@
 ============================================================================*/
 
 #define _GNU_SOURCE
+#include "nvp.h"
+
+#include <ctype.h>
+#include <memory.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <memory.h>
-#include <ctype.h>
-#include "defs.h" 
-#include "nvp.h" 
-#include "log.h" 
 
-struct _NameValuePair
-  {
-  char *name;
-  void *value;
+#include "defs.h"
+#include "log.h"
+
+struct _NameValuePair {
+  char* name;
+  void* value;
   ValueFreeFn valueFreeFn;
-  }; 
-
+};
 
 /*==========================================================================
   nvp_create
 *==========================================================================*/
-NameValuePair *nvp_create (const char *name, 
-     void *value, ValueFreeFn valueFreeFn)
-  {
+NameValuePair* nvp_create(const char* name, void* value, ValueFreeFn valueFreeFn) {
   LOG_IN
 
-  log_debug ("name=%s, value=%08x", name, value);
+  log_debug("name=%s, value=%08x", name, value);
 
-  NameValuePair *self = malloc (sizeof (NameValuePair));
+  NameValuePair* self = malloc(sizeof(NameValuePair));
 
-  self->name = strdup (name);
+  self->name = strdup(name);
   self->value = value;
   self->valueFreeFn = valueFreeFn;
 
   return self;
-  
-  LOG_OUT
-  }
 
+  LOG_OUT
+}
 
 /*==========================================================================
   nvp_destroy
 *==========================================================================*/
-void nvp_destroy (NameValuePair *self)
-  {
+void nvp_destroy(NameValuePair* self) {
   LOG_IN
-  
-  if (self)
-    {
-    if (self->name) free (self->name);
-    if (self->value) self->valueFreeFn (self->value);
-    free (self);
-    }
 
-  LOG_OUT
+  if (self) {
+    if (self->name) free(self->name);
+    if (self->value) self->valueFreeFn(self->value);
+    free(self);
   }
 
+  LOG_OUT
+}
 
 /*==========================================================================
   nvp_get_name
 *==========================================================================*/
-const char *nvp_get_name (const NameValuePair *self)
-  {
-  return self->name;
-  }
-
+const char* nvp_get_name(const NameValuePair* self) { return self->name; }
 
 /*==========================================================================
   nvp_get_value
 *==========================================================================*/
-const void *nvp_get_value (const NameValuePair *self)
-  {
-  return self->value;
-  }
-
-
-
-
-
+const void* nvp_get_value(const NameValuePair* self) { return self->value; }

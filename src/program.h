@@ -2,7 +2,6 @@
   
   fbclock 
   program.h 
-  Copyright (c)2020 Kevin Boone, GPL v3.0
 
 ============================================================================*/
 
@@ -10,9 +9,6 @@
 
 BEGIN_DECLS
 
-int program_run (ProgramContext *context);
+int program_run(ProgramContext* context);
 
 END_DECLS
-
-
-

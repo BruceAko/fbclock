@@ -3,7 +3,6 @@
   boilerplate
 
   features.h
-  Copyright (c)2020 Kevin Boone
   Distributed under the terms of the GPL v3.0
 
   Define which features are included
@@ -30,5 +29,3 @@
 // Include number conversion functions. If defined, the application
 //  will have to be linked with the standard math library
 #define FEATURE_NUMCONVERSION 1
-
-

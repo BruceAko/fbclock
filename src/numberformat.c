@@ -2,7 +2,6 @@
 
   fbclock 
   numberformat.c
-  Copyright (c)2020 Kevin Boone
   Distributed under the terms of the GPL v3.0
 
 ==========================================================================*/

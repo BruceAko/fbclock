@@ -2,7 +2,6 @@
  
   fbclock 
   file.c
-  Copyright (c)2020 Kevin Boone, GPL v3.0
 
   Various file-handling helper functions
 
