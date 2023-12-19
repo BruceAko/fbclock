@@ -62,7 +62,7 @@ ProgramContext* program_context_create(void) {
 
 static void add_custom_time(ProgramContext* self, BOOL* ret) {
   program_context_put_boolean(self, "customTimeEnabled", TRUE);
-  program_context_put_integer(self, "customTimeHr" , (optarg[0] - '0') * 10 + (optarg[1] - '0'));
+  program_context_put_integer(self, "customTimeHr", (optarg[0] - '0') * 10 + (optarg[1] - '0'));
   program_context_put_integer(self, "customTimeMin", (optarg[2] - '0') * 10 + (optarg[3] - '0'));
   program_context_put_integer(self, "customTimeSec", (optarg[4] - '0') * 10 + (optarg[5] - '0'));
 }
@@ -136,7 +136,7 @@ BOOL program_context_parse_command_line(ProgramContext* self, int argc, char** a
           program_context_put_integer(self, "transparency", atoi(optarg));
         else if (strcmp(long_options[option_index].name, "fbdev") == 0)
           program_context_put(self, "fbdev", optarg);
-        else if(strcmp(long_options[option_index].name, "time") == 0)
+        else if (strcmp(long_options[option_index].name, "time") == 0)
           add_custom_time(self, &ret);
         else
           exit(-1);
