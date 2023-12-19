@@ -89,10 +89,10 @@ BOOL framebuffer_init(FrameBuffer* self, char** error) {
     self->fb_data = mmap(0, self->fb_data_size, PROT_READ | PROT_WRITE, MAP_SHARED, self->fd, (off_t)0);
 
     // Black Screen
-    for (int y = 0; y < 768; y++) {
-      for (int x = 0; x < 1024; x++) {
-        *(self->fb_data + y * 1024 * 2 + x * 2) = 0x00;
-        *(self->fb_data + y * 1024 * 2 + x * 2 + 1) = 0x00;
+    for (int y = 0; y < self->h; y++) {
+      for (int x = 0; x < self->w; x++) {
+        *(self->fb_data + y * self->line_length + x * self->fb_bytes) = 0x00;
+        *(self->fb_data + y * self->line_length + x * self->fb_bytes + 1) = 0x00;
       }
     }
 
