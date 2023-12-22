@@ -36,6 +36,7 @@
 // All these variables have to be global, because they are
 //  used by the signal handler
 FrameBuffer *fb = NULL; 
+Region* old_region = NULL;
 int transparency = 40;
 static Region *wallpaper_region = NULL; 
 static int position_x = -1;
@@ -160,8 +161,11 @@ int program_run (ProgramContext *context)
 
         program_draw_clock_in_region (r, seconds, date, customTime);
 
-        region_to_fb (r, fb, position_x, position_y);
-        region_destroy (r);
+        region_to_fb (r, fb, position_x, position_y, old_region);
+
+        if (old_region != NULL) region_destroy (old_region);
+
+        old_region = r;
       
         int time;
         if (seconds){

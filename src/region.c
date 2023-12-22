@@ -168,7 +168,7 @@ void region_destroy(Region* self) {
 /*==========================================================================
   region_to_fb
 *==========================================================================*/
-void region_to_fb(const Region* self, FrameBuffer* fb, int x1, int y1) {
+void region_to_fb(const Region* self, FrameBuffer* fb, int x1, int y1, Region* old) {
   LOG_IN
   int w_in = self->w;
   int h_in = self->h;
@@ -184,9 +184,20 @@ void region_to_fb(const Region* self, FrameBuffer* fb, int x1, int y1) {
       BYTE b = self->data[index24++];
       BYTE g = self->data[index24++];
       BYTE r = self->data[index24];
-      data[index32] = b;
-      data[index32 + 1] = g;
-      data[index32 + 2] = r;
+
+      BYTE old_b, old_g, old_r;
+      if(old!=NULL){
+        old_b = old->data[index24++];
+        old_g = old->data[index24++];
+        old_r = old->data[index24];
+      }
+
+      if(b != old_b || g != old_g || r != old_r) {
+        data[index32] = b;
+        data[index32 + 1] = g;
+        data[index32 + 2] = r;
+      }
+
       xp++;
     }
   }

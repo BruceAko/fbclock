@@ -20,7 +20,7 @@ Region* region_create(int w, int h);
 void region_set_pixel(Region* self, int x, int y, BYTE r, BYTE g, BYTE b);
 void region_fill_rect(Region* self, int x1, int y1, int x2, int y2, BYTE r, BYTE g, BYTE b);
 void region_destroy(Region* self);
-void region_to_fb(const Region* r, FrameBuffer* fb, int x, int y);
+void region_to_fb(const Region* r, FrameBuffer* fb, int x, int y, Region* old);
 void region_from_fb(Region* self, const FrameBuffer* fb, int x, int y);
 void region_darken(Region* self, int percent);
 void region_draw_bitmap_text(Region* self, const BitmapFont* bf, const char* text, int x, int y, int r, int g, int b);
