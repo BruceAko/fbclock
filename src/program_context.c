@@ -61,6 +61,26 @@ ProgramContext* program_context_create(void) {
 }
 
 static void add_custom_time(ProgramContext* self, BOOL* ret) {
+  if(strlen(optarg) != 6) {
+    printf("Invalid time format, should be HHMMSS\n");
+    *ret = FALSE;
+    return;
+  }
+  if(optarg[0] < '0' || optarg[0] > '2' || optarg[1] < '0' || optarg[1] > '9') {
+    printf("Invalid hour format, should be 00-23\n");
+    *ret = FALSE;
+    return;
+  }
+  if(optarg[2] < '0' || optarg[2] > '5' || optarg[3] < '0' || optarg[3] > '9') {
+    printf("Invalid minute format, should be 00-59\n");
+    *ret = FALSE;
+    return;
+  }
+  if(optarg[4] < '0' || optarg[4] > '5' || optarg[5] < '0' || optarg[5] > '9') {
+    printf("Invalid second format, should be 00-59\n");
+    *ret = FALSE;
+    return;
+  }
   program_context_put_boolean(self, "customTimeEnabled", TRUE);
   program_context_put_integer(self, "customTimeHr", (optarg[0] - '0') * 10 + (optarg[1] - '0'));
   program_context_put_integer(self, "customTimeMin", (optarg[2] - '0') * 10 + (optarg[3] - '0'));
