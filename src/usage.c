@@ -19,12 +19,12 @@
   usage_show
 ==========================================================================*/
 void usage_show (FILE *fout, const char *argv0)
-  {
+{
   fprintf (fout, "Usage: %s [options]\n", argv0);
   fprintf (fout, "  -?,--help            show this message\n");
   fprintf (fout, "  -d,--date            show date\n");
   fprintf (fout, "  -f,--fbdev=device    framebuffer device (/dev/fb0)\n");
-  fprintf (fout, "  -h,--height=N         display height\n");
+  fprintf (fout, "  -h,--height=N        display height\n");
   fprintf (fout, "     --log-level=N     log level, 0-5 (default 2)\n");
   fprintf (fout, "  -s,--seconds         show seconds\n");
   fprintf (fout, "  -v,--version         show version\n");
@@ -32,6 +32,5 @@ void usage_show (FILE *fout, const char *argv0)
   fprintf (fout, "  -t,--transparency=%%  transparency\n");
   fprintf (fout, "  -x,--x=N             display x position\n");
   fprintf (fout, "  -y,--y=N             display y position\n");
-  }
-
- 
+  fprintf (fout, "  -T,--time=N          set clock time\n");
+}
