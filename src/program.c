@@ -129,6 +129,7 @@ int program_run (ProgramContext *context)
 
       int transparency = program_context_get_integer 
         (context, "transparency", DEF_TRANSPARENCY);
+      int speed = program_context_get_integer(context, "speed", 1);
       BOOL seconds = program_context_get_boolean 
          (context, "seconds", TRUE); 
       BOOL date = program_context_get_boolean 
@@ -162,6 +163,7 @@ int program_run (ProgramContext *context)
         region_to_fb (r, fb, position_x, position_y);
         region_destroy (r);
       
+        int time;
         if (seconds){
           if(customTime!=NULL){
               customTime->sec++;
@@ -170,7 +172,8 @@ int program_run (ProgramContext *context)
                   customTime->min++;
               }
           }
-          sleep (1);
+          time = 1000000 / speed;
+          usleep(time);
         }
         else{
           if(customTime!=NULL){
@@ -180,7 +183,8 @@ int program_run (ProgramContext *context)
                   customTime->hr++;
               }
           }
-          sleep (60);
+          time = 60000000 / speed;
+          usleep(time);
         }
       }
 

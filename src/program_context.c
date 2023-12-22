@@ -61,22 +61,22 @@ ProgramContext* program_context_create(void) {
 }
 
 static void add_custom_time(ProgramContext* self, BOOL* ret) {
-  if(strlen(optarg) != 6) {
+  if (strlen(optarg) != 6) {
     printf("Invalid time format, should be HHMMSS\n");
     *ret = FALSE;
     return;
   }
-  if(optarg[0] < '0' || optarg[0] > '2' || optarg[1] < '0' || optarg[1] > '9') {
+  if (optarg[0] < '0' || optarg[0] > '2' || optarg[1] < '0' || optarg[1] > '9') {
     printf("Invalid hour format, should be 00-23\n");
     *ret = FALSE;
     return;
   }
-  if(optarg[2] < '0' || optarg[2] > '5' || optarg[3] < '0' || optarg[3] > '9') {
+  if (optarg[2] < '0' || optarg[2] > '5' || optarg[3] < '0' || optarg[3] > '9') {
     printf("Invalid minute format, should be 00-59\n");
     *ret = FALSE;
     return;
   }
-  if(optarg[4] < '0' || optarg[4] > '5' || optarg[5] < '0' || optarg[5] > '9') {
+  if (optarg[4] < '0' || optarg[4] > '5' || optarg[5] < '0' || optarg[5] > '9') {
     printf("Invalid second format, should be 00-59\n");
     *ret = FALSE;
     return;
@@ -123,12 +123,13 @@ BOOL program_context_parse_command_line(ProgramContext* self, int argc, char** a
                                          {"width", required_argument, NULL, 'w'},
                                          {"height", required_argument, NULL, 'h'},
                                          {"time", required_argument, NULL, 'T'},
+                                         {"speed", required_argument, NULL, 'S'},
                                          {0, 0, 0, 0}};
 
   int opt;
   while (ret) {
     int option_index = 0;
-    opt = getopt_long(argc, argv, "vl:w:h:x:y:sf:t:dT:", long_options, &option_index);
+    opt = getopt_long(argc, argv, "vl:w:h:x:y:sf:t:dT:S:", long_options, &option_index);
 
     if (opt == -1) break;
 
@@ -158,6 +159,8 @@ BOOL program_context_parse_command_line(ProgramContext* self, int argc, char** a
           program_context_put(self, "fbdev", optarg);
         else if (strcmp(long_options[option_index].name, "time") == 0)
           add_custom_time(self, &ret);
+        else if (strcmp(long_options[option_index].name, "speed") == 0)
+          program_context_put_integer(self, "speed", atoi(optarg));
         else
           exit(-1);
         break;
@@ -196,6 +199,9 @@ BOOL program_context_parse_command_line(ProgramContext* self, int argc, char** a
         break;
       case 'T':
         add_custom_time(self, &ret);
+        break;
+      case 'S':
+        program_context_put_integer(self, "speed", atoi(optarg));
         break;
       default:
         ret = FALSE;

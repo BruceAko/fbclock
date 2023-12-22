@@ -33,4 +33,5 @@ void usage_show (FILE *fout, const char *argv0)
   fprintf (fout, "  -x,--x=N             display x position\n");
   fprintf (fout, "  -y,--y=N             display y position\n");
   fprintf (fout, "  -T,--time=N          set clock time\n");
+  fprintf (fout, "  -S,--speed=N         set clock speed(only effective when time is customed)\n");
 }
