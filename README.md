@@ -56,6 +56,14 @@ Horizontal position of the top-left corner of the display, in pixels.
 
 Vertical position of the top-left corner of the display, in pixels.
 
+`-T,--time=N`
+
+Set clock time, for example, '-T=084530' means 08:45:30.
+
+`-S,--speed=N`
+
+Set clock speed, only effective when time is customed.
+
 ## Notes
 
 `fbclock` tries to superimpose itself on the existing framebuffer contents but, of course, the framebuffer contents may change. This will erase the clock display until the next update -- which might be a minute -- and when the display does update, the background will be incorrect. To handle this situation -- and this is only  possible when all the various applications collaborate -- `fbclock` will update, including sampling the framebuffer contents, when it receives
